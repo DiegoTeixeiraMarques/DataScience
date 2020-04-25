@@ -1,0 +1,33 @@
+Capítulo 15
+#Correlção
+cor(women)
+#Regressão Linear Simples	
+modelo = lm(height ~ weight, data=women)	
+#
+modelo
+#
+peso = 180
+altura = modelo$coefficients[1] + modelo$coefficients[2] * peso
+altura
+#
+predict(modelo,data.frame(weight = 180))
+#
+plot(height ~weight, data=women)
+abline(modelo)
+#
+women
+predict(modelo,data.frame(weight = 115))
+#
+modelo$residuals
+modelo$fitted.values
+#Regressão Linear Múltipla	
+modelo = lm(stack.loss ~ Air.Flow + Water.Temp, stackloss )
+modelo
+predict(modelo, data.frame(Air.Flow=49,Water.Temp=20))
+#Regressão Logística
+eleicao = read.csv(“Eleicao.csv”,sep=“;”,header=T)
+modelo = glm(SITUACAO~DESPESAS,eleicao,family="binomial")
+modelo
+#
+predict(modelo, data.frame(DESPESAS = 1000), type="response")
+predict(modelo, data.frame(DESPESAS = 1300), type="response")

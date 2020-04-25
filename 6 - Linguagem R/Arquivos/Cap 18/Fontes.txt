@@ -1,0 +1,16 @@
+Capítulo 18
+#Apriori
+library(arules)
+transacoes = read.transactions(“Cestacompras.txt”,format="basket",sep=",")
+transacoes
+#
+summary(transacoes)
+#
+regras <- apriori(transacoes, parameter= list(supp=0.5,conf=0.5))
+#
+inspect(regras)
+#
+library("arulesViz")
+plot(regras, method="graph", control=list(type="items"))
+plot(regras, method="matrix", control=list(type="items"))
+plot(regras, method="grouped")

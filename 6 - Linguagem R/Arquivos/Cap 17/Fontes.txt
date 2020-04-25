@@ -1,0 +1,33 @@
+Capítulo 17
+#K-means
+cluster = kmeans(iris[1:4],centers=3)
+table(iris$Species,cluster$cluster)
+#
+set.seed(2014)
+cluster = kmeans(iris[1:4],centers=3)
+table(iris$Species,cluster$cluster)
+#
+plot(iris[,1:4],col=cluster$cluster)
+#Fuzzi C-Means
+library(e1071)
+cluster = cmeans(iris[,1:4], centers=3)
+head(cluster$membership)
+table(iris$Species, cluster$cluster)
+#K-medoids
+library(fpc)
+cluster = pam(USArrests,k=3))
+plot(cluster)
+table(iris$Species,cluster$clustering)
+#
+cluster$clustering
+#DBScan
+library(fpc)
+cluster <- dbscan(iris[,1:4], eps=0.6, MinPts=4)
+unique(cluster$cluster)
+#
+plot(cluster,iris[1:4])
+#
+table(iris$Species,cluster$cluster)
+#Hierárquico
+cluster = hclust(dist(iris[,1:4]))
+plot(cluster, hang=-1, label=iris$Species)

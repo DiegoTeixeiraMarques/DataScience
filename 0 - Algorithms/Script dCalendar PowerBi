@@ -1,0 +1,17 @@
+let
+    DataMin = List.Min(fFaturados[DATA EMISSAO]),
+    DataMax = List.Max(fFaturados[DATA EMISSAO]),
+    QtdeDias = Duration.Days(DataMax - DataMin) + 1,
+    ListaDatas = List.Dates(DataMin, QtdeDias, #duration(1, 0, 0, 0)),
+    #"Convertido para Tabela" = Table.FromList(ListaDatas, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Colunas Renomeadas" = Table.RenameColumns(#"Convertido para Tabela",{{"Column1", "Data"}}),
+    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"Data", type date}}),
+    #"Ano Inserido" = Table.AddColumn(#"Tipo Alterado", "Ano", each Date.Year([Data]), Int64.Type),
+    #"Mês Inserido" = Table.AddColumn(#"Ano Inserido", "Mês", each Date.Month([Data]), Int64.Type),
+    #"Dia da Semana Inserido" = Table.AddColumn(#"Mês Inserido", "Dia da Semana", each Date.DayOfWeek([Data]), Int64.Type),
+    #"Nome do Mês Inserido" = Table.AddColumn(#"Dia da Semana Inserido", "Nome do Mês", each Date.MonthName([Data]), type text),
+    #"Nome do Dia Inserido" = Table.AddColumn(#"Nome do Mês Inserido", "Nome do Dia", each Date.DayOfWeekName([Data]), type text),
+    #"Linhas Classificadas" = Table.Sort(#"Nome do Dia Inserido",{{"Mês", Order.Ascending}}),
+    #"Linhas Filtradas" = Table.SelectRows(#"Linhas Classificadas", each true)
+in
+    #"Linhas Filtradas"

@@ -1,0 +1,100 @@
+Capítulo 16
+#
+library(foreign)
+credito = read.arff(“credit-g.arff”)
+# Naïve Bayes
+library(e1071)
+#
+amostra = sample(2,1000,replace=T, prob=c(0.7,0.3))
+creditotreino = credito[amostra==1,]
+creditoteste = credito[amostra==2,]
+#
+dim(creditotreino)
+dim(creditoteste)
+#
+modelo <- naiveBayes(class ~., creditotreino)
+#
+modelo
+#
+predicao <- predict(modelo,creditoteste)
+head(predicao)
+#
+confusao = table(creditoteste$class,predicao)
+confusao
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto
+taxaerro
+# Árvore de Decisão com Rpart
+library(rpart)
+modelo = rpart(class ~., creditotreino)
+plot(modelo)
+text(modelo,use.n=T)
+#
+predicao = predict(modelo,creditoteste)
+head(predicao)
+#
+creditoteste$classeprevista = ifelse(predicao[,1] > 0.5,"bad","good")
+confusao = table(creditoteste$class,creditoteste$classeprevista)
+confusao
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto
+# Árvore de Decisão para Regressão
+modelo = rpart(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species ,data=iris)
+modelo
+#
+predicao = predict(modelo, iris)
+head(predicao)
+#
+comparacao = cbind(predicao,iris$Sepal.Length,predicao - iris$Sepal.Length )
+head(comparacao)
+#Árvore de Decisão com Party
+library(party)
+modelo <- ctree(class ~ . ,creditotreino)
+predicao = predict(modelo, creditoteste)
+confusao = table(credito$class,predicao)
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto
+#
+plot(modelo)
+plot(modelo, type="simple")
+# Máquina de Vetor de Suporte
+modelo <- svm(class ~., creditotreino)
+predicao <- predict(modelo,creditoteste)
+confusao = table(creditoteste$class,predicao)
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto
+#Seleção de Atributos
+random.forest.importance(class~.,credito)
+#
+modelo = svm(class ~ checking_status + duration + credit_history + purpose + credit_amount + savings_status + other_parties ,credito)
+#Aprendizado Baseado em Instância: Vizinho mais Próximo
+library(class)
+amostra = sample(2,150,replace=T, prob=c(0.7,0.3))
+iristreino = iris[amostra==1,]
+classificar = iris[amostra==2,]
+previsao = knn(iristreino[,1:4],classificar[,1:4],iristreino[,5],k=1)
+confusao = table(classificar[,5],previsao)
+confusao
+taxaacerto = (confusao[1,1] + confusao[2,2] + confusao[3,3])/ sum(confusao)
+taxaerro = (sum(confusao) - (confusao[1,1] + confusao[2,2] +confusao[3,3])) / sum(confusao)
+taxaacerto
+taxaerro
+# Métodos de Grupos
+modelo = randomForest(class ~ . ,creditotreino, ntree=500)
+predicao = predict(modelo,creditoteste)
+confusao = table(creditoteste$class,predicao)
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto
+#
+library(adabag)
+#
+modelo = boosting(class ~., data = creditotreino, mfinal =100)
+predicao = predict(modelo, creditoteste)
+taxaacerto = (confusao[1] + confusao[4]) / sum(confusao)
+taxaerro = (confusao[2] + confusao[3]) / sum(confusao)
+taxaacerto

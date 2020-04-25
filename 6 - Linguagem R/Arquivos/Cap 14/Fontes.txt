@@ -1,0 +1,15 @@
+Capítulo 14
+#Recalculando Sub_Total
+library(sqldf)
+faturas = read.csv(“Faturas.csv“,sep=”;”)
+fatura_itens = read.csv(“Fatura_Itens.csv”,sep=”;”)
+#
+faturasds = sqldf("SELECT faturas.ID_FATURA,faturas.VALOR as TOTAL,fatura_itens.QUANTIDADE,fatura_itens.PRECO_UNITARIO,fatura_itens.SUB_TOTAL FROM faturas INNER JOIN fatura_itens on faturas.ID_FATURA = fatura_Itens.ID_FATURA")
+head(faturasds)
+#
+faturasds$NOVO_SUB_TOTAL = faturasds$QUANTIDADE * faturasds$PRECO_UNITARIO
+subset(faturasds2,round(faturasds2$NOVO_SUB_TOTAL,2) != round(faturasds2$SUB_TOTAL,2))
+# Recalculando Total
+faturastotais = sqldf("SELECT ID_FATURA,TOTAL,SUM(SUB_TOTAL) as NOVO_TOTAL FROM faturasds GROUP BY ID_FATURA,TOTAL")
+head(faturastotais)
+subset(faturastotais,round(TOTAL,2) != round(NOVO_TOTAL,2))

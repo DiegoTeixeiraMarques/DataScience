@@ -1,0 +1,64 @@
+Words;Freq
+Data Mining ;5
+R ;5
+Machine Learning;3
+Analysis;4
+Data Science;4
+Big Data;3
+Visualization;3
+BI ;3
+Database ;3
+Statistics;3
+Data ;3
+Data Warehouse;3
+Hadoop;2
+MDX ;2
+NoSQL ;2
+OLAP ;2
+Predictive ;2
+Zettabyte;2
+byte;2
+kibibyte;2
+mebibyte;2
+gibibyte;2
+tebibyte;1
+pebibyte;1
+exbibyte;1
+zebibyte;1
+yobibyte;1
+MapReduce;1
+over-fitting ;1
+supervised ;1
+testing ;1
+training ;1
+unsupervised ;1
+HDFS;1
+Pig;1
+ZooKeeper;1
+Hive;1
+Mahout;1
+Cassandra;1
+Avro;1
+Datasets ;1
+Decision Trees ;1
+Random Forest ;1
+Regression ;1
+Clustering ;1
+k-Means ;1
+k-Medoids ;1
+Outlier;1
+ANCOVA;1
+ANOVA;1
+ARIMA;1
+Chi-Square ;1
+Histogram;1
+Mean;1
+Naive Bayes;1
+p-value;1
+Sample;1
+Bias;1
+axon ;1
+bias ;1
+C4.5 ;1
+C5 ;1
+ID3 ;1

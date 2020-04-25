@@ -1,0 +1,44 @@
+Capítulo 19
+#Lei de Benford
+library(benford.analysis)
+teste = read.csv(“Faturas.csv”,sep=“,”,header=T)
+dados = as.numeric(teste$VALOR)
+modelo = benford(dados,number.of.digits=1)
+plot(modelo)
+#Grafos
+library(igraph)
+dados<-read.csv(“Grafo1.csv”,sep=";", header=FALSE
+rede1 <- graph.data.frame(dados, directed=FALSE)
+plot(rede1)
+#
+dados<-read.csv(“Grafo2.csv”,sep=";", header=FALSE)
+rede2 <- graph.data.frame(dados, directed=FALSE)
+plot(rede2)
+#
+graph.isomorphic(rede1,rede2)
+#Mineração de Texto
+library(tm)
+getSources()
+getReaders()
+#
+corpus = VCorpus(DirSource("E:/Mineração de dados/Textmining/texto", encoding = "UTF-8"),readerControl =list(reader=readPlain,language = "por"))
+#
+inspect(corpus)
+#
+corpus = tm_map(corpus , removeWords,stopwords("portuguese"))
+corpus = tm_map(corpus , stripWhitespace)
+corpus = tm_map(corpus , removePunctuation)
+corpus = tm_map(corpus , removeNumbers)
+#
+freq <- TermDocumentMatrix(corpus)
+removeSparseTerms(freq, 0.4)
+#
+tf = as.data.frame(freq$v,freq$dimnames$Terms)
+tf = subset(tf,freq$v>8)
+tf
+
+
+
+
+
+

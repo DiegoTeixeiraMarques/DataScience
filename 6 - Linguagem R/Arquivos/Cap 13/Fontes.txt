@@ -1,0 +1,32 @@
+Capítulo 13
+#Medidas de Dispersão e de Centro
+sd(iris$Sepal.Length)
+summary(iris[,1:4])
+#Diagrama de Dispersão
+plot(iris$Sepal.Length, iris$Sepal.Width)
+#
+plot( iris$Sepal.Length, iris$Sepal.Width,ylab= "Largura" ,xlab = "Comprimento", col="blue", main="Iris", pch=20)
+#
+plot( jitter(iris$Sepal.Length), iris$Sepal.Width,ylab= "Largura" , xlab = "Comprimento", col=iris$Species,main="Iris", pch=20)
+#Diagrama de Setor
+setor = aggregate(Petal.Width ~ Species, data = iris, sum)
+setor
+pie(setor$Petal.Width, labels=setor$Species,
+main="Iris",col=c(2,3,4))
+#Gráfico de Barras
+barplot(setor$Petal.Width, names.arg=setor$Species,main="Iris",col=c(2,3,4))
+box()
+#Diagrama de Caixa
+boxplot( iris[1:4] , data=tabela, main="Iris" , xlab ="Variáveis" , col="blue" , horizontal=FALSE, notch=TRUE )
+#
+boxplot.stats(iris$Sepal.Width)
+#Histograma
+hist( iris$Sepal.Length , main="Iris", xlab= "Comprimento",ylab="Frequência", col="blue" , density=50,breaks=10 )
+#Nuvem de Palavras
+library(wordcloud)
+nuvem = read.csv(“wordcloud.csv”,header=T,sep=";")
+wordcloud(words=nuvem$Words,freq=nuvem$Freq,min.freq=1,random.order=TRUE,colors=brewer.pal(8,"Dark2"),use.r.layout=TRUE,rot.per=0.5)
+#Caras de Chernoff
+library(aplpack)
+rostos = read.csv(“faces.csv”,sep=”;”)
+faces(rostos[,2:16],labels=rostos$Nome, face.type=0)
